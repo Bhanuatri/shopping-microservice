@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Shop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 600px; margin: auto; }
+        .card { border: 1px solid #ccc; padding: 20px; border-radius: 8px; }
+        .field { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button.primary { background: #007bff; color: white; }
+        .messages { margin-bottom: 15px; }
+        .msg { padding: 10px; border-radius: 4px; margin-bottom: 6px; }
+        .msg.error { background: #ffe5e5; color: #a10000; }
+        .msg.success { background: #e5ffe8; color: #006b1d; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Simple Shopping Site</h1>
+
+    <div class="messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="msg {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="card">
+        <form method="POST">
+            <div class="field">
+                <label for="name">Your Name</label>
+                <input id="name" name="name" required>
+            </div>
+
+            <div class="field">
+                <label for="card_number">Card Number (dummy)</label>
+                <input id="card_number" name="card_number" minlength="8" maxlength="16" required>
+            </div>
+
+            <div class="field">
+                <label for="product_id">Select Product</label>
+                <select id="product_id" name="product_id" required>
+                    <option value="">-- Choose a product --</option>
+                    {% for p in products %}
+                        <option value="{{ p.id }}">
+                            {{ p.name }} - ${{ "%.2f"|format(p.price) }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="primary">Pay & Place Order</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
