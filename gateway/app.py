@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = "super-secret-key"  # for flash messages; change in real app
 
 PRODUCTS_SERVICE_URL = os.getenv("PRODUCTS_SERVICE_URL", "http://products_service:5001")
-PAYMENTS_SERVICE_URL = os.getenv("PAYMENTS_SERVICE_URL", "http://payments_service:5002")
+PAYMENT_SERVICE_URL = os.getenv("PAYMENT_SERVICE_URL", "http://payment_service:5002")
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -44,7 +44,7 @@ def index():
 
         try:
             pay_response = requests.post(
-                f"{PAYMENTS_SERVICE_URL}/pay",
+                f"{PAYMENT_SERVICE_URL}/pay",
                 json=payment_payload,
                 timeout=5
             )
