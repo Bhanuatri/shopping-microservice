@@ -9,9 +9,9 @@ services:
     networks:
       - shopnet
 
-  payments_service:
-    build: ./payments_service
-    container_name: payments_service
+  payment_service:
+    build: ./payment_service
+    container_name: payment_service
     ports:
       - "5002:5002"
     networks:
@@ -22,12 +22,12 @@ services:
     container_name: gateway
     environment:
       PRODUCTS_SERVICE_URL: "http://products_service:5001"
-      PAYMENTS_SERVICE_URL: "http://payments_service:5002"
+      PAYMENT_SERVICE_URL: "http://payment_service:5002"
     ports:
       - "8000:5000"  # Expose gateway on host: 8000
     depends_on:
       - products_service
-      - payments_service
+      - payment_service
     networks:
       - shopnet
 
