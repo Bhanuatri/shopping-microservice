@@ -6,7 +6,17 @@ app = Flask(__name__)
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "ok"})
-
+# ADD THESE LINES
+@app.route("/products", methods=["GET"])
+def get_products():
+    # Return a dummy list of products as JSON
+    products = [
+        {"id": 1, "name": "Laptop", "price": 999.99},
+        {"id": 2, "name": "Headphones", "price": 49.99},
+        {"id": 3, "name": "Mouse", "price": 19.99},
+    ]
+    return jsonify(products)
+# END OF ADDED LINES
 
 @app.route("/pay", methods=["POST"])
 def pay():
